@@ -1,0 +1,75 @@
+# Experiment parameters
+
+# architecture options
+architecture: M2 # The architecture has to be one of these [T:'segconformer_T',S:'segconformer_S',B:'segconformer_B',L:'segconformer_L']
+arch_parameters:
+  stemming_chans: 
+    - 3
+    - 32
+    - 32
+  aspp_options: 
+    branch1: # output size 128
+      in_channels: 32 
+      out_channels: 32
+      kernel_size: 3
+      dilation: 1
+      stride: 2
+      padding: 1
+    branch2: # output size 64
+      in_channels: 32 
+      out_channels: 64
+      kernel_size: 17
+      dilation: 4
+      stride: 3
+      padding: 0
+    branch3: # output size  32
+      in_channels: 32 
+      out_channels: 128
+      kernel_size: 11
+      dilation: 4
+      stride: 7
+      padding: 1
+    branch4: # output size  16
+      in_channels: 32 
+      out_channels: 256
+      kernel_size: 9
+      dilation: 2
+      stride: 16
+      padding: 1
+  tr_channels: 
+    - 32
+    - 64
+    - 128
+    - 256
+  upsample_option: 'transpose' 
+  fusion_option: 'cat'
+  decoder_chans: 
+    - 256 
+    - 256
+    - 256
+
+# Training parameters
+n_class: 1 # for binary case we set number of classes to 1
+n_epochs: 150 # the number of epoches
+warmup_period: 5 # number of epochs in which lr is warmed up
+bs_train: 16 # batch size used during training
+nw_train: 2  # number of workers used by train dataloaders
+bs_validate: 4 # batch size used during validation
+nw_validate: 1 # number of workers used by validation dataloaders
+
+lr_value: 0.0001
+scheduler:
+  step_size: 25
+  gamma: 0.2
+  
+data_path: '/workspace/anesphd/data' # the absolute path to where the data is stored
+images_folder: 'tcis'
+image_extension: '.png'
+mask_folder: 'chips_labels'
+mask_extension: '.npy'
+
+
+models_folder: '/workspace/anesphd/trained_models'
+
+
+
